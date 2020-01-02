@@ -47,7 +47,7 @@ target_compile_options(lcms PRIVATE -DUNICODE -D_UNICODE)
 target_include_directories(lcms PRIVATE "${CMAKE_CURRENT_LIST_DIR}/include")
 set_target_properties(lcms PROPERTIES PUBLIC_HEADER "${CMAKE_CURRENT_LIST_DIR}/include/lcms2.h;${CMAKE_CURRENT_LIST_DIR}/include/lcms2_plugin.h")
 
-add_executable(jpegicc
+add_executable(jpgicc
     "${CMAKE_CURRENT_LIST_DIR}/utils/jpgicc/iccjpeg.c"
     "${CMAKE_CURRENT_LIST_DIR}/utils/jpgicc/iccjpeg.h"
     "${CMAKE_CURRENT_LIST_DIR}/utils/jpgicc/jpgicc.c"
@@ -57,15 +57,15 @@ add_executable(jpegicc
 find_package (JPEG REQUIRED)
 if (JPEG_FOUND)
   include_directories(${JPEG_INCLUDE_DIRS})
-  target_link_libraries (jpegicc ${JPEG_LIBRARIES} -static)
+  target_link_libraries (jpgicc ${JPEG_LIBRARIES} -static)
 endif (JPEG_FOUND)
-target_link_libraries (jpegicc lcms -static)
-target_include_directories(jpegicc PRIVATE 
+target_link_libraries (jpgicc lcms -static)
+target_include_directories(jpgicc PRIVATE
     "${CMAKE_CURRENT_LIST_DIR}/utils/common"
     "${CMAKE_CURRENT_LIST_DIR}/include"
 )
 
-add_executable(tifficc
+add_executable(tificc
     "${CMAKE_CURRENT_LIST_DIR}/utils/tificc/tificc.c"
     "${CMAKE_CURRENT_LIST_DIR}/utils/common/vprf.c"
     "${CMAKE_CURRENT_LIST_DIR}/utils/common/xgetopt.c"
@@ -73,10 +73,10 @@ add_executable(tifficc
 find_package (TIFF REQUIRED)
 if (TIFF_FOUND)
   include_directories(${TIFF_INCLUDE_DIRS})
-  target_link_libraries (tifficc ${TIFF_LIBRARIES} -static)
+  target_link_libraries (tificc ${TIFF_LIBRARIES} -static)
 endif (TIFF_FOUND)
-target_link_libraries (tifficc lcms -static)
-target_include_directories(tifficc PRIVATE 
+target_link_libraries (tificc lcms -static)
+target_include_directories(tificc PRIVATE
     "${CMAKE_CURRENT_LIST_DIR}/utils/common"
     "${CMAKE_CURRENT_LIST_DIR}/include"
 )
@@ -87,7 +87,7 @@ add_executable(transicc
     "${CMAKE_CURRENT_LIST_DIR}/utils/common/xgetopt.c"
 )
 target_link_libraries (transicc lcms)
-target_include_directories(transicc PRIVATE 
+target_include_directories(transicc PRIVATE
     "${CMAKE_CURRENT_LIST_DIR}/utils/common"
     "${CMAKE_CURRENT_LIST_DIR}/include"
 )
@@ -98,7 +98,7 @@ add_executable(linkicc
     "${CMAKE_CURRENT_LIST_DIR}/utils/common/xgetopt.c"
 )
 target_link_libraries (linkicc lcms)
-target_include_directories(linkicc PRIVATE 
+target_include_directories(linkicc PRIVATE
     "${CMAKE_CURRENT_LIST_DIR}/utils/common"
     "${CMAKE_CURRENT_LIST_DIR}/include"
 )
@@ -109,12 +109,12 @@ add_executable(psicc
     "${CMAKE_CURRENT_LIST_DIR}/utils/common/xgetopt.c"
 )
 target_link_libraries (psicc lcms)
-target_include_directories(psicc PRIVATE 
+target_include_directories(psicc PRIVATE
     "${CMAKE_CURRENT_LIST_DIR}/utils/common"
     "${CMAKE_CURRENT_LIST_DIR}/include"
 )
 
-install(TARGETS lcms jpegicc tifficc transicc linkicc psicc
+install(TARGETS lcms jpgicc tificc transicc linkicc psicc
     EXPORT lcmsConfig
     RUNTIME DESTINATION "bin"
     LIBRARY DESTINATION "lib"
