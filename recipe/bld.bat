@@ -2,16 +2,14 @@ COPY %RECIPE_DIR%\CMakeLists.txt %SRC_DIR%\CMakeLists.txt
 mkdir build
 cd build
 
-cmake -G "NMake Makefiles" ^
+cmake -LAH -G "Ninja" ^
       -DBUILD_SHARED_LIBS="1" ^
       -DCMAKE_BUILD_TYPE="Release" ^
       -DCMAKE_INSTALL_PREFIX=%PREFIX% ^
       ..
-
 if errorlevel 1 exit 1
 
-nmake
+cmake --build . --target install --config Release
 if errorlevel 1 exit 1
 
-nmake install
-if errorlevel 1 exit 1
+exit 0

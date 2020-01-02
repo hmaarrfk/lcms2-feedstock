@@ -23,6 +23,7 @@ requirements:
     - {{ compiler('c') }}
     - make  # [not win]
     - cmake  # [win]
+    - ninja  # [win]
 
   host:
     - jpeg
