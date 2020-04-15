@@ -8,13 +8,10 @@ package:
 source:
   url: https://ayera.dl.sourceforge.net/project/lcms/lcms/{{ version }}/lcms2-{{ version }}.tar.gz
   sha256: 48c6fdf98396fa245ed86e622028caf49b96fa22f3e5734f853f806fbc8e7d20
-  patches:
-        - remove_library_directive_win.patch  # [win]
-        - build_shared_win.patch  # [win]
 
 build:
   skip: true  # [win and vc<14]
-  number: 3
+  number: 4
   run_exports:
     - {{ pin_subpackage("lcms2") }}
 
@@ -40,8 +37,8 @@ test:
     - transicc
     - psicc
     - if not exist %LIBRARY_INC%\\lcms2.h exit 1   # [win]
-    - if not exist %LIBRARY_LIB%\\lcms.lib exit 1  # [win]
-    - if not exist %LIBRARY_BIN%\\lcms.dll exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\\lcms2.lib exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\\lcms2.dll exit 1  # [win]
 
 about:
   home: http://www.littlecms.com/
