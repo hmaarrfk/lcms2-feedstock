@@ -16,7 +16,6 @@ set(CMS_INCLUDE_DIRS ${CMAKE_CURRENT_LIST_DIR}/include)
 
 if(BUILD_SHARED_LIBS)
     add_library(lcms2 SHARED ${CMS_SOURCES} ${CMS_HDRS})
-    # add_library(lcms2 SHARED ${CMS_SOURCES} ${CMS_HDRS} ${CMAKE_CURRENT_LIST_DIR}/src/lcms2.def)
     target_compile_options(lcms2 PRIVATE -DCMS_DLL_BUILD)
     target_compile_options(lcms2 PUBLIC -DCMS_DLL)
     target_compile_options(lcms2 PRIVATE -DUNICODE -D_UNICODE)
@@ -28,7 +27,6 @@ if(BUILD_STATIC_LIBS)
     add_library(lcms2_static STATIC ${CMS_SOURCES} ${CMS_HDRS})
     target_compile_options(lcms2_static PRIVATE -DUNICODE -D_UNICODE)
     target_include_directories(lcms2_static PRIVATE ${CMS_INCLUDE_DIRS})
-    # set_target_properties(lcms2_static PROPERTIES PUBLIC_HEADER "${CMAKE_CURRENT_LIST_DIR}/include/lcms2.h;${CMAKE_CURRENT_LIST_DIR}/include/lcms2_plugin.h")
 endif()
 
 set(UTILS_SOURCES 
@@ -50,9 +48,9 @@ add_executable(jpgicc
 find_package(JPEG REQUIRED)
 if(JPEG_FOUND)
   include_directories(${JPEG_INCLUDE_DIRS})
-  target_link_libraries(jpgicc ${JPEG_LIBRARIES} -static)
+  target_link_libraries(jpgicc ${JPEG_LIBRARIES})
 endif(JPEG_FOUND)
-target_link_libraries(jpgicc lcms2 -static)
+target_link_libraries(jpgicc lcms2)
 target_include_directories(jpgicc PRIVATE ${UTILS_INCLUDE_DIRS})
 
 add_executable(linkicc
@@ -76,9 +74,9 @@ add_executable(tificc
 find_package(TIFF REQUIRED)
 if(TIFF_FOUND)
   include_directories(${TIFF_INCLUDE_DIRS})
-  target_link_libraries(tificc ${TIFF_LIBRARIES} -static)
+  target_link_libraries(tificc ${TIFF_LIBRARIES})
 endif(TIFF_FOUND)
-target_link_libraries(tificc lcms2 -static)
+target_link_libraries(tificc lcms2)
 target_include_directories(tificc PRIVATE ${UTILS_INCLUDE_DIRS})
 
 add_executable(transicc
@@ -88,7 +86,7 @@ add_executable(transicc
 target_link_libraries(transicc lcms2)
 target_include_directories(transicc PRIVATE ${UTILS_INCLUDE_DIRS})
 
-install(TARGETS lcms2 lcms2_static jpgicc tificc transicc linkicc psicc
+install(TARGETS lcms2 lcms2_static jpgicc linkicc psicc tificc transicc
     EXPORT lcmsConfig
     RUNTIME DESTINATION "bin"
     LIBRARY DESTINATION "lib"
